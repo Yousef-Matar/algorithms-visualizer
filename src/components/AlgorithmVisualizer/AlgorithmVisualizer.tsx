@@ -3,6 +3,7 @@ import NavBar from "../Navigation/NavBar";
 // Maze Helpers
 import {
 	clearGrid,
+	clearPath,
 	getInitialGrid,
 	getNewGridWithMaze,
 	getNewGridWithWalls,
@@ -26,6 +27,7 @@ const AlgorithmVisualizer = () => {
 	const [visualized, setVisualized] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [mouseIsPressed, setMouseIsPressed] = useState(false);
+	const [clickType, setClickType] = useState("wall");
 	const [width, setWidth] = useState(window.innerWidth);
 	const [height, setHeight] = useState(window.innerHeight);
 	const [mazeSpeed, setMazeSpeed] = useState(10);
@@ -40,7 +42,33 @@ const AlgorithmVisualizer = () => {
 	// Adding Custom Walls Handler
 	const handleMouseDown = (node: MazeNode) => {
 		if (loading) return;
-		setGrid(getNewGridWithWalls(grid, node));
+		if (clickType === "start") {
+			node.isStart = true;
+			node.isWall = false;
+			grid[startFinishNode.start.row][startFinishNode.start.col] = {
+				...startFinishNode.start,
+				isStart: false,
+			};
+			startFinishNode.start = node;
+			if (visualized) {
+				setGrid(clearPath(grid));
+			}
+			setClickType("wall");
+		} else if (clickType === "goal") {
+			node.isFinish = true;
+			node.isWall = false;
+			grid[startFinishNode.finish.row][startFinishNode.finish.col] = {
+				...startFinishNode.finish,
+				isFinish: false,
+			};
+			startFinishNode.finish = node;
+			if (visualized) {
+				setGrid(clearPath(grid));
+			}
+			setClickType("wall");
+		} else {
+			setGrid(getNewGridWithWalls(grid, node));
+		}
 		setMouseIsPressed(true);
 	};
 	// Maze Speed
@@ -96,7 +124,7 @@ const AlgorithmVisualizer = () => {
 			return;
 		}
 		if (visualized) {
-			clearBoard();
+			setGrid(clearPath(grid));
 		}
 		setLoading(true);
 		setTimeout(() => {
@@ -150,7 +178,10 @@ const AlgorithmVisualizer = () => {
 		}
 	};
 	const animateShortestPath = (nodesInShortestPathOrder: MazeNode[]) => {
-		if (nodesInShortestPathOrder.length === 1) setLoading(false);
+		if (nodesInShortestPathOrder.length === 1) {
+			setLoading(false);
+			setVisualized(true);
+		}
 		for (let i = 1; i < nodesInShortestPathOrder.length - 1; i++) {
 			let node = nodesInShortestPathOrder[i];
 			setTimeout(() => {
@@ -178,28 +209,36 @@ const AlgorithmVisualizer = () => {
 				loading={loading}
 			/>
 			<div className="flex gap-3 m-5 justify-center flex-wrap">
-				<div className="flex gap-1 items-center">
-					<div className="border border-primary node-start w-5 h-5"></div>
+				<button
+					className="flex gap-1 items-center disabled:cursor-not-allowed"
+					onClick={() => setClickType("start")}
+					disabled={loading}
+				>
+					<div className="border border-primary node-start w-5 h-5" />
 					Start
-				</div>
-				<div className="flex gap-1 items-center">
-					<div className="border border-primary node-finish w-5 h-5"></div>
+				</button>
+				<button
+					className="flex gap-1 items-center disabled:cursor-not-allowed"
+					onClick={() => setClickType("goal")}
+					disabled={loading}
+				>
+					<div className="border border-primary node-finish w-5 h-5" />
 					Goal
-				</div>
+				</button>
 				<div className="flex gap-1 items-center">
-					<div className="border border-primary w-5 h-5"></div>
+					<div className="border border-primary w-5 h-5" />
 					Unvisited Node
 				</div>
 				<div className="flex gap-1 items-center">
-					<div className="border border-primaryAlternate bg-primaryAlternate w-5 h-5"></div>
+					<div className="border border-primaryAlternate bg-primaryAlternate w-5 h-5" />
 					Wall
 				</div>
 				<div className="flex gap-1 items-center">
-					<div className="border border-primary bg-[#1ea5b9bf] w-5 h-5"></div>
+					<div className="border border-primary bg-[#1ea5b9bf] w-5 h-5" />
 					Visited Node
 				</div>
 				<div className="flex gap-1 items-center">
-					<div className="border border-primary bg-[#ff00ffbf] w-5 h-5"></div>
+					<div className="border border-primary bg-[#ff00ffbf] w-5 h-5" />
 					Shortest Path Node
 				</div>
 			</div>

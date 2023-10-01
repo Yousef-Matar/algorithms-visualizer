@@ -14,7 +14,6 @@ declare global {
 		isStart?: boolean;
 		isFinish?: boolean;
 		isVisited?: boolean;
-		isShortest?: boolean;
 		isWall?: boolean;
 		previousNode?: MazeNode | null | undefined;
 	};

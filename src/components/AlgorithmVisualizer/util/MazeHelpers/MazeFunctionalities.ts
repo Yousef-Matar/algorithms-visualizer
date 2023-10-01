@@ -29,6 +29,7 @@ export const clearGrid = (
 						col === startFinishNode.finish.col)
 				)
 			) {
+				initialGrid[row][col].isWall = false;
 				const mazeNode = document.getElementById(`node-${row}-${col}`);
 				if (mazeNode?.className) {
 					mazeNode.className = "border border-primary";
@@ -37,6 +38,28 @@ export const clearGrid = (
 		}
 	}
 	return getInitialGrid(mazeSize, startFinishNode);
+};
+export const clearPath = (initialGrid: Array<Array<MazeNode>>) => {
+	let newGrid = initialGrid.slice();
+	for (let row of initialGrid) {
+		for (let node of row) {
+			let newNode = {
+				...node,
+				isVisited: false,
+				previousNode: null,
+			};
+			newGrid[node.row][node.col] = newNode;
+			if (!(node.isFinish || node.isStart || node.isWall)) {
+				const mazeNode = document.getElementById(
+					`node-${node.row}-${node.col}`
+				);
+				if (mazeNode?.className) {
+					mazeNode.className = "border border-primary";
+				}
+			}
+		}
+	}
+	return newGrid;
 };
 export const getNewGridWithWalls = (
 	initialGrid: Array<Array<MazeNode>>,
@@ -76,7 +99,6 @@ const createNode = (node: MazeNode, startFinishNode: StartFinishNode) => {
 			node.row === startFinishNode.finish.row &&
 			node.col === startFinishNode.finish.col,
 		isVisited: false,
-		isShortest: false,
 		isWall: false,
 		previousNode: null,
 	};

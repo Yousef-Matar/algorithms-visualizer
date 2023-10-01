@@ -17,8 +17,6 @@ const Node = (props: {
 		? "border border-primary node-finish"
 		: props.node.isWall
 		? "border border-primaryAlternate bg-primaryAlternate"
-		: props.node.isShortest
-		? "border border-primary node-shortest-path"
 		: props.node.isVisited
 		? "border border-primary node-visited"
 		: "border border-primary";
@@ -43,7 +41,7 @@ const Node = (props: {
 			}}
 			onMouseDown={() => props.onMouseDown(props.node)}
 			onMouseUp={() => props.onMouseUp()}
-		></td>
+		/>
 	);
 };
 
