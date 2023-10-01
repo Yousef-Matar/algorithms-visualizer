@@ -1,0 +1,143 @@
+.node-start {
+	background-color: green;
+}
+
+.node-finish {
+	background: url("../../assets/img/Flag.png"), red;
+	background-size: cover, contain;
+	background-position: center, right bottom;
+	background-repeat: no-repeat, no-repeat;
+}
+
+.node-finish-reached {
+	animation-name: finishVisitedAnimation;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-fill-mode: forwards;
+}
+
+.node-wall-animated {
+	animation-name: wallAnimation;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-fill-mode: forwards;
+}
+
+.node-visited {
+	animation-name: visitedAnimation;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-fill-mode: forwards;
+}
+
+.node-shortest-path {
+	animation-name: shortestPathAnimation;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-fill-mode: forwards;
+}
+
+@keyframes wallAnimation {
+	0% {
+		transform: scale(0.4);
+		background-color: #545454;
+		border-radius: 30%;
+	}
+
+	50% {
+		transform: scale(0.6);
+		background-color: #545454;
+		border-radius: 20%;
+	}
+
+	75% {
+		transform: scale(0.8);
+		background-color: #545454;
+		border-radius: 10%;
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: #545454;
+		border: 1px solid #545454;
+	}
+}
+
+@keyframes visitedAnimation {
+	0% {
+		transform: scale(0.3);
+		background-color: rgb(255, 0, 255);
+		border-radius: 100%;
+	}
+
+	50% {
+		transform: scale(0.5);
+		background-color: rgba(10, 55, 95, 0.75);
+		border-radius: 75%;
+	}
+
+	75% {
+		transform: scale(0.7);
+		background-color: rgba(20, 110, 140, 0.75);
+		border-radius: 50%;
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: rgba(30, 165, 185, 0.75);
+	}
+}
+
+@keyframes shortestPathAnimation {
+	0% {
+		transform: scale(0.3);
+		background-color: rgba(255, 0, 255, 0.75);
+		border-radius: 100%;
+	}
+
+	50% {
+		transform: scale(0.5);
+		background-color: rgba(255, 0, 255, 0.75);
+		border-radius: 75%;
+	}
+
+	75% {
+		transform: scale(0.7);
+		background-color: rgba(255, 0, 255, 0.75);
+		border-radius: 50%;
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: rgba(255, 0, 255, 0.75);
+	}
+}
+
+@keyframes finishVisitedAnimation {
+	0% {
+		transform: scale(0.5);
+		background-color: red;
+		border-radius: 50%;
+	}
+
+	50% {
+		transform: scale(0.8);
+		background-color: red;
+		border-radius: 25%;
+	}
+
+	75% {
+		transform: scale(1.2);
+		background-color: red;
+		border-radius: 20%;
+	}
+
+	100% {
+		transform: scale(1);
+		background-color: red;
+	}
+}
