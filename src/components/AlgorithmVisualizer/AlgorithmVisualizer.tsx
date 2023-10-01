@@ -183,7 +183,7 @@ const AlgorithmVisualizer = () => {
 				setMazeSpeed={adjustMazeSpeed}
 				loading={loading}
 			/>
-			<div className="flex gap-3 m-5 justify-center">
+			<div className="flex gap-3 m-5 justify-center flex-wrap">
 				<div className="flex gap-1 items-center">
 					<div className="border border-primary node-start w-5 h-5"></div>
 					Start
