@@ -134,10 +134,7 @@ const AlgorithmVisualizer = () => {
 			let node = visitedNodesInOrder[i];
 			if (i === visitedNodesInOrder.length) {
 				setTimeout(() => {
-					animateShortestPath(
-						visitedNodesInOrder,
-						nodesInShortestPathOrder
-					);
+					animateShortestPath(nodesInShortestPathOrder);
 				}, i * mazeSpeed);
 				return;
 			}
@@ -152,10 +149,7 @@ const AlgorithmVisualizer = () => {
 			}, i * mazeSpeed);
 		}
 	};
-	const animateShortestPath = (
-		visitedNodesInOrder: MazeNode[],
-		nodesInShortestPathOrder: MazeNode[]
-	) => {
+	const animateShortestPath = (nodesInShortestPathOrder: MazeNode[]) => {
 		if (nodesInShortestPathOrder.length === 1) setLoading(false);
 		for (let i = 1; i < nodesInShortestPathOrder.length - 1; i++) {
 			let node = nodesInShortestPathOrder[i];
