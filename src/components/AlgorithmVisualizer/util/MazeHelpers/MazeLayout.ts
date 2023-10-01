@@ -19,8 +19,8 @@ export const calculateMazeSize = (width: number, height: number): MazeSize => {
 	let numRows = Math.floor(height / cellWidth);
 
 	return {
-		rows: numRows,
-		columns: numColumns,
+		rows: Math.min(numRows, 50),
+		columns: Math.min(numColumns, 100),
 	};
 };
 export const getStartFinishNode = (mazeSize: MazeSize): StartFinishNode => {

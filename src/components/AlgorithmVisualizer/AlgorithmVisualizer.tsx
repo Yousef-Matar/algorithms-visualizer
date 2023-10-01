@@ -43,27 +43,37 @@ const AlgorithmVisualizer = () => {
 	const handleMouseDown = (node: MazeNode) => {
 		if (loading) return;
 		if (clickType === "start") {
-			node.isStart = true;
-			node.isWall = false;
-			grid[startFinishNode.start.row][startFinishNode.start.col] = {
-				...startFinishNode.start,
-				isStart: false,
-			};
-			startFinishNode.start = node;
-			if (visualized) {
-				setGrid(clearPath(grid));
+			if (
+				startFinishNode.finish.row !== node.row &&
+				startFinishNode.finish.col !== node.col
+			) {
+				node.isStart = true;
+				node.isWall = false;
+				grid[startFinishNode.start.row][startFinishNode.start.col] = {
+					...startFinishNode.start,
+					isStart: false,
+				};
+				startFinishNode.start = node;
+				if (visualized) {
+					setGrid(clearPath(grid));
+				}
 			}
 			setClickType("wall");
 		} else if (clickType === "goal") {
-			node.isFinish = true;
-			node.isWall = false;
-			grid[startFinishNode.finish.row][startFinishNode.finish.col] = {
-				...startFinishNode.finish,
-				isFinish: false,
-			};
-			startFinishNode.finish = node;
-			if (visualized) {
-				setGrid(clearPath(grid));
+			if (
+				startFinishNode.start.row !== node.row &&
+				startFinishNode.start.col !== node.col
+			) {
+				node.isFinish = true;
+				node.isWall = false;
+				grid[startFinishNode.finish.row][startFinishNode.finish.col] = {
+					...startFinishNode.finish,
+					isFinish: false,
+				};
+				startFinishNode.finish = node;
+				if (visualized) {
+					setGrid(clearPath(grid));
+				}
 			}
 			setClickType("wall");
 		} else {
